@@ -1,0 +1,22 @@
+$bg: #05040b;
+$text: #f4f2ff;
+$muted: rgba(222, 218, 255, .64);
+$line: rgba(255, 255, 255, .09);
+
+$violet: #9b5cff;
+$violet-light: #c4a8ff;
+$blue: #4c7dff;
+
+$grad: linear-gradient(90deg, #a855f7 0%, #7b61ff 50%, #4f86ff 100%);
+$grad-title: linear-gradient(90deg, #c08bff 0%, #8a7bff 48%, #62a8ff 100%);
+
+// шрифты зависят от языка страницы (см. html в base/_base.scss): у Michroma и Space Grotesk нет кириллицы.
+// Семейства подключает next/font (src/lib/fonts.ts) через CSS-переменные --ff-*; у var() всегда есть запасной вариант —
+// на странице подключены не все шрифты, а неопределённая переменная обнулила бы всё объявление
+$font-display: var(--font-display);
+$font-body: var(--font-body);
+$font-logo: var(--ff-michroma, system-ui), var(--ff-unbounded, system-ui), sans-serif;
+$font-mono: var(--ff-mono, ui-monospace), ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+$ease-out: cubic-bezier(.16, 1, .3, 1);
+$ease-in-out: cubic-bezier(.65, 0, .35, 1);

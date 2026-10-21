@@ -1,0 +1,166 @@
+@use '../abstracts/functions' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+// выбор языка в шапке: кнопка EN ▾ + выпадающий список
+.lang {
+  position: relative;
+  margin-right: rem(14);
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(9);
+    height: rem(46);
+    padding: 0 rem(14);
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: rem(6);
+    background: rgba(255, 255, 255, .03);
+    font-family: $font-mono;
+    font-size: rem(11.5);
+    letter-spacing: .14em;
+    color: #fff;
+    transition: border-color .4s, background-color .4s;
+
+    .icon {
+      width: rem(15);
+      height: rem(15);
+      color: $violet-light;
+    }
+
+    &:hover {
+      border-color: rgba(176, 140, 255, .7);
+      background-color: rgba(139, 92, 246, .14);
+    }
+  }
+
+  &__caret {
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    opacity: .7;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform .4s $ease-out;
+  }
+
+  &.is-open &__caret {
+    transform: translateY(1px) rotate(225deg);
+  }
+
+  &__list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + #{rem(8)});
+    z-index: 2;
+    min-width: rem(200);
+    margin: 0;
+    padding: rem(6);
+    list-style: none;
+    border-radius: rem(8);
+    @include glass(.88);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .3s, transform .45s $ease-out, visibility .3s;
+  }
+
+  &.is-open &__list {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  &__opt {
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+    padding: rem(10) rem(12);
+    border-radius: rem(5);
+    font-size: rem(14);
+    text-decoration: none;
+    color: rgba(255, 255, 255, .75);
+    transition: background-color .3s, color .3s;
+
+    &:hover,
+    &:focus-visible {
+      background-color: rgba(139, 92, 246, .16);
+      color: #fff;
+    }
+
+    &[aria-current] {
+      color: #fff;
+
+      &::after {
+        content: '';
+        width: 6px;
+        height: 6px;
+        margin-left: auto;
+        background: $violet;
+        box-shadow: 0 0 8px $violet;
+      }
+    }
+  }
+
+  &__opt-code {
+    width: rem(24);
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .14em;
+    color: $violet-light;
+  }
+
+  @include mq(tablet) {
+    margin: 0 10px 0 auto;
+
+    &__btn {
+      height: 44px;
+      padding: 0 12px;
+      font-size: 11px;
+    }
+
+    &__list { min-width: 190px; }
+    &__opt { font-size: 14px; padding: 10px 12px; }
+    &__opt-code { font-size: 11px; width: 24px; }
+  }
+}
+
+// в мобильном меню — ряд кнопок EN / RU / UA
+.menu__langs {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu__lang {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 6px;
+  font-family: $font-mono;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-decoration: none;
+  color: rgba(255, 255, 255, .7);
+
+  &[aria-current] {
+    border-color: rgba(176, 140, 255, .7);
+    background: rgba(139, 92, 246, .16);
+    color: #fff;
+  }
+}
+
+.menu__lang-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

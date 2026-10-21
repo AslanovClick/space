@@ -1,0 +1,478 @@
+@use '../abstracts/functions' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+// ---------- сеть: метрики ----------
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: rem(14);
+  margin-top: rem(34);
+}
+
+.metric {
+  position: relative;
+  padding: rem(20) rem(20) rem(18);
+  border-radius: rem(12);
+  @include glass(.5);
+  @include spotlight;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: rem(14);
+  }
+
+  &__label {
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .72);
+  }
+
+  &__value {
+    display: flex;
+    align-items: baseline;
+    gap: rem(8);
+    margin-top: rem(16);
+    font-family: $font-display;
+    font-size: rem(32);
+    line-height: 1;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__unit {
+    font-family: $font-mono;
+    font-size: rem(14);
+    letter-spacing: .08em;
+    color: $violet-light;
+  }
+
+  &__text {
+    margin-top: rem(10);
+    font-size: rem(13.5);
+    color: $muted;
+  }
+
+  @include mq(tablet) {
+    padding: 16px;
+
+    &__value { font-size: 26px; margin-top: 14px; }
+    &__text { font-size: 13px; }
+  }
+
+  @include mq(mobile) {
+    &__top { gap: 10px; }
+    &__label { font-size: 9.5px; }
+    &__value { font-size: 21px; margin-top: 12px; }
+    &__unit { font-size: 12px; }
+    &__text { display: none; }
+  }
+}
+
+.metrics {
+  @include mq(mobile) {
+    gap: 10px;
+    margin-top: 22px;
+  }
+}
+
+// ---------- манифест ----------
+.manifesto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  &__text {
+    max-width: rem(1100);
+    margin-top: rem(28);
+    font-family: $font-display;
+    font-size: rem(40);
+    line-height: 1.34;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    text-shadow: 0 0 rem(30) rgba(5, 4, 11, .7);
+
+    .w {
+      display: inline-block;
+      opacity: .14;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: rem(14) rem(36);
+    margin-top: rem(42);
+    padding: 0;
+    list-style: none;
+    font-family: $font-mono;
+    font-size: rem(11.5);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+
+    li {
+      display: flex;
+      gap: rem(10);
+    }
+
+    span {
+      color: rgba(255, 255, 255, .55);
+    }
+
+    strong {
+      font-weight: 500;
+      color: #fff;
+    }
+  }
+
+  @include mq(tablet) {
+    &__text { font-size: 28px; }
+  }
+
+  @include mq(mobile) {
+    &__text { font-size: 20px; margin-top: 20px; }
+    &__meta { font-size: 10.5px; gap: 10px 20px; margin-top: 28px; }
+  }
+}
+
+// ---------- покрытие: цифры ----------
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: rem(14);
+  max-width: rem(520);
+  margin-top: rem(34);
+
+  @include mq(mobile) {
+    gap: 10px;
+    margin-top: 22px;
+  }
+}
+
+.stat-box {
+  position: relative;
+  padding: rem(18) rem(22);
+  border-left: 1px solid rgba(196, 168, 255, .55);
+  background: linear-gradient(90deg, rgba(139, 92, 246, .14), rgba(139, 92, 246, 0) 85%);
+
+  &__v {
+    display: flex;
+    align-items: baseline;
+    font-family: $font-display;
+    font-size: rem(32);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+
+    small {
+      margin-left: rem(6);
+      font-family: $font-mono;
+      font-size: rem(13);
+      color: $violet-light;
+    }
+  }
+
+  &__k {
+    margin-top: rem(10);
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: $muted;
+  }
+
+  @include mq(tablet) {
+    padding: 14px 16px;
+
+    &__v { font-size: 24px; }
+    &__k { font-size: 10px; }
+  }
+}
+
+// ---------- ретранслятор ----------
+.relay {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: rem(64);
+
+  &__card {
+    position: relative;
+    max-width: rem(440);
+    padding: rem(28);
+    border-radius: rem(14);
+    @include glass(.5);
+
+    .label {
+      margin-bottom: rem(16);
+    }
+
+    .text {
+      margin-top: rem(14);
+      font-size: rem(15);
+    }
+  }
+
+  @include mq(tablet) {
+    padding-bottom: 28px;
+
+    &__card { padding: 22px; max-width: 420px; }
+  }
+
+  @include mq(mobile) {
+    &__card .text { display: none; }
+  }
+}
+
+.telemetry {
+  display: grid;
+  gap: rem(9);
+  margin: rem(22) 0 0;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: rem(16);
+    padding-bottom: rem(9);
+    border-bottom: 1px dashed rgba(255, 255, 255, .13);
+  }
+
+  dt {
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: $muted;
+  }
+
+  dd {
+    margin: 0;
+    font-family: $font-mono;
+    font-size: rem(12.5);
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__ok {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    color: #93f3cf !important;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+
+    &::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #93f3cf;
+      box-shadow: 0 0 8px #93f3cf;
+      animation: dot-pulse 1.6s ease-in-out infinite;
+    }
+  }
+
+  @include mq(tablet) {
+    dt { font-size: 10px; }
+    dd { font-size: 12px; }
+  }
+}
+
+// HUD-прицел, который ведёт корабль в видео
+.reticle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 100px;
+  height: 60px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+
+  &__c {
+    position: absolute;
+    width: rem(18);
+    height: rem(18);
+    border: 0 solid #dccdff;
+    filter: drop-shadow(0 0 4px rgba(167, 139, 250, .9));
+
+    &--tl { left: 0; top: 0; border-left-width: 1.5px; border-top-width: 1.5px; }
+    &--tr { right: 0; top: 0; border-right-width: 1.5px; border-top-width: 1.5px; }
+    &--bl { left: 0; bottom: 0; border-left-width: 1.5px; border-bottom-width: 1.5px; }
+    &--br { right: 0; bottom: 0; border-right-width: 1.5px; border-bottom-width: 1.5px; }
+  }
+
+  &__cross {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: rem(12);
+    height: rem(12);
+    margin: rem(-6) 0 0 rem(-6);
+    opacity: .75;
+    background:
+      linear-gradient(#fff, #fff) center / 100% 1px no-repeat,
+      linear-gradient(#fff, #fff) center / 1px 100% no-repeat;
+  }
+
+  &__label {
+    position: absolute;
+    left: calc(100% + #{rem(14)});
+    top: 0;
+    display: grid;
+    gap: rem(5);
+    padding-left: rem(10);
+    border-left: 1px solid rgba(196, 168, 255, .6);
+    font-family: $font-mono;
+    font-size: rem(10.5);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, .72);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__id {
+    color: #fff;
+  }
+
+  &__ok {
+    display: flex;
+    align-items: center;
+    gap: rem(7);
+    color: #93f3cf;
+
+    &::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: #93f3cf;
+      box-shadow: 0 0 6px #93f3cf;
+      animation: dot-pulse 1.2s ease-in-out infinite;
+    }
+  }
+
+  @include mq(mobile) {
+    &__label { display: none; }
+  }
+}
+
+// ---------- луна: проверка адреса ----------
+.beyond {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  padding-top: rem(150);
+  padding-bottom: rem(64);
+
+  &__check {
+    position: relative;
+    grid-row: 3;
+    justify-self: end;
+    width: 100%;
+    max-width: rem(500);
+    padding: rem(26);
+    border-radius: rem(14);
+    @include glass(.5);
+  }
+
+  &__lead {
+    margin-bottom: rem(16);
+    font-family: $font-mono;
+    font-size: rem(12);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .8);
+  }
+
+  @include mq(tablet) {
+    padding-top: 110px;
+    padding-bottom: 28px;
+
+    &__check { padding: 20px; }
+    &__lead { font-size: 11px; }
+  }
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: rem(12);
+  height: rem(56);
+  padding: rem(5) rem(5) rem(5) rem(16);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: rem(8);
+  background: rgba(5, 4, 11, .45);
+  transition: border-color .4s, box-shadow .4s;
+
+  &:focus-within {
+    border-color: rgba(176, 140, 255, .65);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, .14);
+  }
+
+  &.is-error {
+    border-color: rgba(255, 110, 140, .7);
+  }
+
+  > .icon {
+    flex: none;
+    width: rem(18);
+    height: rem(18);
+    color: $violet-light;
+  }
+
+  input {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: rem(15);
+    color: #fff;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, .58);
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .btn {
+    height: 100%;
+    padding: 0 rem(20);
+  }
+
+  &.is-scanning .btn {
+    pointer-events: none;
+    opacity: .8;
+  }
+
+  &__result {
+    min-height: 1.5em;
+    margin-top: rem(14);
+    font-family: $font-mono;
+    font-size: rem(12);
+    letter-spacing: .08em;
+    color: #93f3cf;
+
+    &.is-error {
+      color: #ff9db4;
+    }
+  }
+
+  @include mq(tablet) {
+    height: 52px;
+
+    input { font-size: 16px; }
+    .btn { padding: 0 16px; }
+    &__result { font-size: 11.5px; }
+  }
+}
