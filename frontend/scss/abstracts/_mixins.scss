@@ -1,0 +1,164 @@
+@use "sass:list";
+@use 'functions' as *;
+
+
+// tablet: <= 1024, mobile: <= 767
+@mixin mq($bp) {
+  @if $bp == tablet {
+    @media (max-width: 1024px) { @content; }
+  } @else if $bp == mobile {
+    @media (max-width: 767px) { @content; }
+  } @else if $bp == desktop {
+    @media (min-width: 1025px) { @content; }
+  }
+}
+
+// тёмное стекло поверх видео
+@mixin glass($a: .55) {
+  background: linear-gradient(180deg, rgba(20, 17, 42, $a), rgba(8, 7, 20, $a + .08));
+  border: 1px solid rgba(255, 255, 255, .09);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  backdrop-filter: blur(16px) saturate(130%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 20px 50px rgba(0, 0, 0, .3);
+}
+
+// подсветка и рамка, которые тянутся за курсором (--mx/--my ставит JS)
+@mixin spotlight {
+  isolation: isolate;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .6s cubic-bezier(.16, 1, .3, 1);
+  }
+
+  &::before {
+    z-index: -1;
+    background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), rgba(147, 92, 255, .2), transparent 65%);
+  }
+
+  &::after {
+    padding: 1px;
+    background: radial-gradient(16rem circle at var(--mx, 50%) var(--my, 0%), rgba(206, 176, 255, .95), rgba(90, 140, 255, .35) 40%, transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+
+  @media (hover: hover) {
+    &:hover::before,
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin pseudo() {
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+// div::after {
+//     @include pseudo;
+// }
+
+@mixin input-placeholder {
+  &::-webkit-input-placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+}
+
+// input,  
+// textarea {  
+//     @include input-placeholder {
+//         color: $grey;
+//     }
+// }
+@mixin pointer {
+  &[disabled] {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @media (pointer: fine) {
+    &:not([disabled]):hover {
+      @content;
+      cursor: pointer;
+    }
+  }
+
+  &:not([disabled]):active {
+    @content;
+  }
+}
+
+// @include pointer{
+//   background: #FFCA42;
+//   color: #15191F
+// }
+
+
+@mixin transition($time, $properties...) {
+  $transition: ();
+
+  @each $property in $properties {
+    $transition: list.append($transition, ($property $time ease-in-out), $separator: comma);
+  }
+
+  transition: $transition;
+}
+
+// @include transition(150ms, width, background-color);
+
+
+
+@mixin transitionDelay($time, $delay, $properties...) {
+  $transition: ();
+
+@each $property in $properties {
+  $transition: list.append($transition, ($property $time $delay ease-in-out), $separator: comma);
+}
+
+transition: $transition;
+}
+
+// @include transitionDelay(150ms, 150ms, width, background-color);
+
+@mixin scrollbars($size, $foreground-color, $background-color: rgba($foreground-color, 0.2)) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+
+    &:hover {
+      background: rgba($foreground-color, 0.6);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+    overflow-y: auto;
+    scrollbar-color: $foreground-color $background-color;
+    scrollbar-width: thin;
+    transition: scrollbar-color 0.3s ease-out;
+
+    &:hover {
+      scrollbar-color: rgba($foreground-color, 0.6);
+    }
+  }
+}

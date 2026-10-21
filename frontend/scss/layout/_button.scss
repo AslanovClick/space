@@ -1,0 +1,124 @@
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(12);
+  height: rem(56);
+  padding: 0 rem(30);
+  border-radius: rem(6);
+  font-family: $font-mono;
+  font-size: rem(12.5);
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #fff;
+  isolation: isolate;
+  overflow: hidden;
+  transition: box-shadow .5s $ease-out, border-color .4s, background-color .4s;
+
+  .icon {
+    width: rem(17);
+    height: rem(17);
+    flex: none;
+    transition: transform .5s $ease-out;
+  }
+
+  // блик, пробегающий по кнопке
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -60%;
+    width: 50%;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .28), transparent);
+    transform: skewX(-20deg) translateX(0);
+    transition: transform .9s $ease-out;
+    pointer-events: none;
+  }
+
+  @include pointer {
+    .icon {
+      transform: translateX(rem(4));
+    }
+    &::after {
+      transform: skewX(-20deg) translateX(420%);
+    }
+  }
+
+  &--primary {
+    background: $grad;
+    box-shadow: 0 rem(10) rem(30) rgba(124, 77, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .25);
+
+    @include pointer {
+      box-shadow: 0 rem(14) rem(44) rgba(124, 77, 255, .6), inset 0 1px 0 rgba(255, 255, 255, .3);
+    }
+  }
+
+  &--ghost {
+    border: 1px solid rgba(255, 255, 255, .2);
+    background-color: rgba(255, 255, 255, .02);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+
+    @include pointer {
+      border-color: rgba(176, 140, 255, .7);
+      background-color: rgba(139, 92, 246, .12);
+    }
+  }
+
+  &--block {
+    display: flex;
+    width: 100%;
+  }
+
+  @include mq(tablet) {
+    height: 52px;
+    padding: 0 24px;
+    font-size: 12px;
+    gap: 10px;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.btn-account {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(10);
+  height: rem(46);
+  padding: 0 rem(20);
+  border-radius: rem(6);
+  border: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .03);
+  font-family: $font-mono;
+  font-size: rem(11.5);
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .4s, background-color .4s, box-shadow .4s;
+
+  .icon {
+    width: rem(16);
+    height: rem(16);
+  }
+
+  @include pointer {
+    border-color: rgba(176, 140, 255, .7);
+    background-color: rgba(139, 92, 246, .14);
+    box-shadow: 0 0 rem(24) rgba(139, 92, 246, .3);
+  }
+}

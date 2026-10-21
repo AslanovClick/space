@@ -1,0 +1,281 @@
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
+
+@property --ring-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.section-head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .label {
+    margin-bottom: rem(18);
+  }
+
+  .text {
+    max-width: rem(480);
+    margin-top: rem(16);
+  }
+}
+
+.plans {
+  position: relative;
+  z-index: 1;
+  padding: rem(120) 0 rem(90);
+
+  // на десктопе секция прилипает на весь экран, пока тарифы «собираются»;
+  // если контент всё равно выше экрана — JS ужмёт его масштабом (--fit)
+  @media (min-width: 1025px) and (min-height: 600px) {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
+
+    > .container {
+      padding-top: rem(36);
+      transform: scale(var(--fit, 1));
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(20);
+    margin-top: rem(36);
+  }
+
+  &__note {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: rem(10) rem(30);
+    margin-top: rem(26);
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: $muted;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: rem(10);
+
+      &::before {
+        content: '';
+        width: rem(5);
+        height: rem(5);
+        background: $violet;
+        box-shadow: 0 0 8px $violet;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  @include mq(tablet) {
+    padding: 100px 0 60px;
+
+    &__grid {
+      grid-template-columns: 1fr;
+      max-width: 460px;
+      margin: 44px auto 0;
+      gap: 30px;
+    }
+  }
+}
+
+.plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: rem(24) rem(26);
+  border-radius: rem(14);
+  @include glass(.55);
+  @include spotlight;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__code {
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .16em;
+    color: $muted;
+  }
+
+  &__glyph {
+    width: rem(40);
+    height: rem(40);
+    filter: drop-shadow(0 0 rem(10) rgba(150, 110, 255, .6));
+  }
+
+  &__name {
+    margin-top: rem(14);
+    font-family: $font-display;
+    font-size: rem(21);
+    font-weight: 400;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  &__desc {
+    margin-top: rem(6);
+    font-size: rem(14);
+    color: $muted;
+  }
+
+  &__price {
+    display: flex;
+    align-items: baseline;
+    margin-top: rem(18);
+    font-family: $font-display;
+  }
+
+  &__currency {
+    align-self: flex-start;
+    margin: rem(3) rem(4) 0 0;
+    font-size: rem(18);
+    color: $violet-light;
+  }
+
+  &__amount {
+    font-size: rem(38);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__period {
+    margin-left: rem(10);
+    font-family: $font-mono;
+    font-size: rem(12);
+    letter-spacing: .1em;
+    color: $muted;
+  }
+
+  &__speed {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: rem(8);
+    margin-top: rem(12);
+    padding: rem(6) rem(11);
+    border: 1px solid rgba(139, 92, 246, .4);
+    background: rgba(139, 92, 246, .1);
+    font-family: $font-mono;
+    font-size: rem(11);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+
+    .icon {
+      width: rem(14);
+      height: rem(14);
+      color: $violet-light;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: rem(10);
+    margin: rem(18) 0 rem(22);
+    padding: rem(16) 0 0;
+    border-top: 1px dashed rgba(255, 255, 255, .13);
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: rem(12);
+      font-size: rem(14);
+      color: rgba(255, 255, 255, .86);
+    }
+
+    .icon {
+      flex: none;
+      width: rem(16);
+      height: rem(16);
+      color: $violet-light;
+    }
+  }
+
+  .btn {
+    margin-top: auto;
+    height: rem(48);
+  }
+
+  &--featured {
+    border-color: transparent;
+    background:
+      radial-gradient(120% 70% at 50% 0%, rgba(124, 77, 255, .26), transparent 62%),
+      radial-gradient(90% 60% at 85% 100%, rgba(59, 130, 246, .2), transparent 60%),
+      rgba(14, 11, 34, .78);
+    box-shadow: 0 rem(30) rem(80) rgba(70, 40, 200, .35), 0 0 rem(70) rgba(120, 80, 255, .25);
+  }
+
+  // переливающаяся рамка у популярного тарифа
+  &__ring {
+    position: absolute;
+    inset: -1px;
+    z-index: 1;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--ring-angle), #9b5cff, #4f86ff, #59d6ff, #b46cff, #9b5cff);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    pointer-events: none;
+    animation: ring-spin 7s linear infinite;
+  }
+
+  &__badge {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    padding: rem(7) rem(14);
+    border: 1px solid rgba(160, 130, 255, .6);
+    background: #120e28;
+    box-shadow: 0 0 rem(24) rgba(139, 92, 246, .5);
+    font-family: $font-mono;
+    font-size: rem(10.5);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+
+    .icon {
+      width: rem(12);
+      height: rem(12);
+      color: #fff;
+    }
+  }
+
+  @include mq(tablet) {
+    padding: 26px;
+
+    &__glyph { width: 42px; height: 42px; }
+    &__name { font-size: 20px; }
+    &__amount { font-size: 38px; }
+    &__currency { font-size: 18px; }
+    &__list li { font-size: 14.5px; }
+    .btn { height: 50px; }
+  }
+}
+
+@keyframes ring-spin {
+  to { --ring-angle: 360deg; }
+}

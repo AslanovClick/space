@@ -1,0 +1,324 @@
+-
+	// Языки сайта: en — корень, ru — /ru/, uk — /uk/. LANG и ROOT задаёт страница (index.pug, ru/index.pug, uk/index.pug)
+	var LANG_ORDER = ['en', 'ru', 'uk'];
+	var LANGS = {
+		en: { code: 'EN', name: 'English', locale: 'en_US', intl: 'en-US', path: '' },
+		ru: { code: 'RU', name: 'Русский', locale: 'ru_RU', intl: 'ru-RU', path: 'ru/' },
+		uk: { code: 'UA', name: 'Українська', locale: 'uk_UA', intl: 'uk-UA', path: 'uk/' }
+	};
+
+	// ссылка на версию сайта на языке l (относительно текущей страницы)
+	function langHref(l) { return ROOT + LANGS[l].path; }
+
+	// числа по правилам языка: 4,200 / 4 200; 99.99 / 99,99
+	function num(v, dec, group) {
+		return new Intl.NumberFormat(LANGS[LANG].intl, { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0, useGrouping: !!group }).format(parseFloat(v));
+	}
+
+	var DICT = {
+		en: {
+			meta: {
+				title: 'DOMAIN — Fiber & orbital internet up to 10 Gbps',
+				description: 'Fiber and low-orbit relay internet up to 10 Gbps with under 5 ms latency. Simple plans from $59.99/mo, no contracts. Check coverage at your address.',
+				imageAlt: 'DOMAIN: internet from another dimension. A black hole with a glowing accretion disk.',
+				slogan: 'Internet from another dimension',
+				service: 'Internet service provider'
+			},
+			skip: 'Skip to content',
+			lang: 'Language',
+			logoHome: 'DOMAIN — home',
+			premium: 'Premium internet',
+			u: { gbps: 'Gbps', mbps: 'Mbps', ms: 'ms', km: 'km' },
+			nav: { aria: 'Main', ariaMobile: 'Mobile', home: 'Home', technology: 'Technology', coverage: 'Coverage', plans: 'Plans', about: 'About', account: 'My account', menu: 'Menu', open: 'Open menu' },
+			hero: {
+				h1: 'Internet from another dimension: fiber and orbital internet up to 10 Gbps',
+				kicker: 'Beyond speed. Beyond limits.',
+				t1: 'Internet from', t2a: 'Another', t2b: 'Dimension',
+				hud: 'Network at a glance', signal: 'Signal', uptime: 'Uptime', latency: 'Latency',
+				text: 'DOMAIN delivers ultra-fast, ultra-reliable internet powered by next-gen network technology.',
+				plans: 'View plans', coverage: 'Check coverage', hint: 'Scroll to enter', cursor: 'Scroll ↓'
+			},
+			net: {
+				label: '[01] Engineered for the future', t1: 'Next-generation', t2: 'network',
+				text: 'Built on a global fiber backbone with AI-optimized routing for unmatched speed and stability.',
+				m1: 'Speeds up to', m1t: 'Symmetrical upload & download',
+				m2: 'Ultra-low latency', m2t: 'Gaming, streaming & work',
+				m3: 'Pure fiber', m3t: 'No copper. No compromise.',
+				m4: 'DDoS protected', m4t: 'Enterprise-grade security'
+			},
+			man: {
+				aria: 'Our promise', label: '[02] Signal',
+				text: "We don't bend space. We fold the distance between you and everything you love.",
+				latency: 'Latency', throughput: 'Throughput', medium: 'Medium', fiber: '100% fiber'
+			},
+			partners: { label: '[03] Trusted across the galaxy', t1: 'Powering the', t2: 'boldest teams', aria: 'Partners' },
+			tech: {
+				label: '[04] Technology', t1: 'How the', t2: 'signal travels', hop: 'Hop',
+				text: 'From a petabit core to the router in your hallway: five hops, under five milliseconds.',
+				steps: [
+					{ title: 'Quantum core', text: 'Hardened data cores with petabit switching sit at the heart of the network.', specs: [['Capacity', '400 Tbps'], ['Redundancy', 'N+2']] },
+					{ title: 'AI routing', text: 'Neural routing predicts congestion and re-paths packets before you notice a thing.', specs: [['Decisions', '2M / sec'], ['Re-route', '< 1 ms']] },
+					{ title: 'Orbital relay', text: 'A low-orbit relay fleet covers the places where fiber cannot reach.', specs: [['Altitude', '550 km'], ['Fleet', '4,200 nodes']] },
+					{ title: 'Fiber backbone', text: 'Pure glass from continent to curb. No copper anywhere in the path.', specs: [['Medium', '100% fiber'], ['Loss', '0.2 dB/km']] },
+					{ title: 'Your home', text: 'A Wi-Fi 7 mesh carries the full 10 Gbps into every room.', specs: [['Standard', 'Wi-Fi 7'], ['Install', '48 h']] }
+				]
+			},
+			orbit: {
+				aria: 'Coverage and orbital network',
+				label: '[05] Coverage', t1: 'From orbit', t2: 'to your doorstep',
+				text: 'Fiber on the ground, relays in the sky. One seamless network wherever you are.',
+				countries: 'Countries', nodes: 'Relay nodes', altitude: 'Orbit altitude', uptime: 'Network uptime',
+				relayLabel: '[06] Orbital relay fleet', relayT1: 'Handoff at', relayT2: 'orbital speed',
+				relayText: 'Low-orbit relays pass your signal between each other every 90 seconds. Seamless, invisible, always on.',
+				velocity: 'Velocity', linkLatency: 'Link latency', throughput: 'Throughput', status: 'Status', online: 'Online',
+				lock: 'RLY-07 // LOCK', stable: 'Link stable',
+				beyondLabel: '[07] Beyond', beyondT1: 'Next stop:', beyondT2: 'everywhere',
+				checkLead: 'Check if the signal reaches your address.', checkLabel: 'Address or ZIP code', checkPh: 'Address or ZIP code'
+			},
+			plans: {
+				label: '[08] Choose your plan', title: 'Simple. Transparent. Powerful.',
+				popular: 'Most popular', mo: '/ mo', perMonth: 'per month', start: 'Get started', startSr: 'with {name}',
+				noteAria: 'Included with every plan', notes: ['No contracts', 'No hidden fees', 'No throttling', 'Switch anytime'],
+				items: {
+					cosmic: { name: 'Cosmic', desc: 'Everyday streaming and browsing.', speed: 'Up to 250 Mbps', list: ['250 Mbps download / upload', 'Unlimited data', '99.9% uptime guarantee', '24/7 support'] },
+					galactic: { name: 'Galactic', desc: 'Gamers, families and smart homes.', speed: 'Up to 1 Gbps', list: ['1 Gbps download / upload', 'Unlimited data', 'Ultra-low latency', 'Priority support'] },
+					supernova: { name: 'Supernova', desc: 'Power users who demand the ultimate.', speed: 'Up to 10 Gbps', list: ['10 Gbps download / upload', 'Unlimited data', 'Dedicated connection', '24/7 premium support'] }
+				}
+			},
+			perks: {
+				title: 'Why DOMAIN',
+				items: [
+					['Wide coverage', 'Expanding across the globe every day.'],
+					['Smart technology', 'AI-powered network optimization.'],
+					['24/7 support', 'Always here. Always connected.'],
+					['No contracts', "Freedom to choose what's best for you."]
+				]
+			},
+			cta: { label: '[09] Launch', t1: 'Ready to leave', t2: 'the atmosphere?', text: 'Connected in 48 hours. No contracts. Cancel anytime.', connect: 'Get connected', talk: 'Talk to us' },
+			footer: {
+				note: 'Internet from another dimension. Built for the ones who never wait.',
+				company: 'Company', companyLinks: ['About us', 'Careers', 'Newsroom', 'Contact'],
+				resources: 'Resources', resourceLinks: ['Support', 'FAQs', 'Network status', 'Privacy policy'],
+				stay: 'Stay connected', stayText: 'Get the latest updates and offers.',
+				email: 'Email', emailPh: 'Enter your email', subscribe: 'Subscribe', social: 'Social media',
+				rights: 'All rights reserved.', nominal: 'Signal nominal'
+			},
+			pre: { meta: 'Uplink · v2.6' },
+			js: {
+				status: ['Establishing uplink', 'Syncing orbital relays', 'Buffering the void', 'Signal locked'],
+				log: ['boot sequence // ok', 'handshake RLY-07 // 4.2 ms', 'orbit sync // 4,200 nodes', 'calibrating event horizon', 'frames buffered', 'signal locked'],
+				buffer: 'Buffer',
+				scan: 'Scan', scanning: 'Scanning', triangulating: 'Triangulating relays',
+				checkOk: '✓ Signal locked · up to 10 Gbps available', checkErr: 'Please enter an address or ZIP code.',
+				subErr: 'Please enter a valid email address.', subOk: 'Thanks! You are subscribed.', subDone: 'You are on the list',
+				menuOpen: 'Open menu', menuClose: 'Close menu', partner: 'Partner',
+				kms: 'km/s', ms: 'ms', gbps: 'Gbps', dist: 'DIST', km: 'KM'
+			}
+		},
+
+		ru: {
+			meta: {
+				title: 'DOMAIN — оптический и орбитальный интернет до 10 Гбит/с',
+				description: 'Оптоволокно и низкоорбитальные ретрансляторы: интернет до 10 Гбит/с с задержкой меньше 5 мс. Простые тарифы от $59,99 в месяц, без контрактов. Проверьте покрытие по адресу.',
+				imageAlt: 'DOMAIN: интернет из другого измерения. Чёрная дыра со светящимся аккреционным диском.',
+				slogan: 'Интернет из другого измерения',
+				service: 'Интернет-провайдер'
+			},
+			skip: 'Перейти к содержимому',
+			lang: 'Язык',
+			logoHome: 'DOMAIN — на главную',
+			premium: 'Премиум-интернет',
+			u: { gbps: 'Гбит/с', mbps: 'Мбит/с', ms: 'мс', km: 'км' },
+			nav: { aria: 'Основное меню', ariaMobile: 'Мобильное меню', home: 'Главная', technology: 'Технологии', coverage: 'Покрытие', plans: 'Тарифы', about: 'О нас', account: 'Кабинет', menu: 'Меню', open: 'Открыть меню' },
+			hero: {
+				h1: 'Интернет из другого измерения: оптический и орбитальный интернет до 10 Гбит/с',
+				kicker: 'Быстрее скорости. Шире границ.',
+				t1: 'Интернет из', t2a: 'другого', t2b: 'измерения',
+				hud: 'Сеть в цифрах', signal: 'Сигнал', uptime: 'Доступность', latency: 'Задержка',
+				text: 'DOMAIN — сверхбыстрый и сверхнадёжный интернет на сетевых технологиях нового поколения.',
+				plans: 'Смотреть тарифы', coverage: 'Проверить покрытие', hint: 'Листайте вниз', cursor: 'Листайте ↓'
+			},
+			net: {
+				label: '[01] Создано для будущего', t1: 'Сеть', t2: 'нового поколения',
+				text: 'Глобальная оптоволоконная магистраль и маршрутизация на ИИ: непревзойдённая скорость и стабильность.',
+				m1: 'Скорость до', m1t: 'Одинаково быстрая загрузка и отдача',
+				m2: 'Сверхнизкая задержка', m2t: 'Игры, стриминг и работа',
+				m3: 'Чистая оптика', m3t: 'Без меди. Без компромиссов.',
+				m4: 'Защита от DDoS', m4t: 'Безопасность корпоративного уровня'
+			},
+			man: {
+				aria: 'Наше обещание', label: '[02] Сигнал',
+				text: 'Мы не искривляем пространство. Мы сворачиваем расстояние между вами и всем, что вы любите.',
+				latency: 'Задержка', throughput: 'Скорость', medium: 'Среда', fiber: '100% оптика'
+			},
+			partners: { label: '[03] Нам доверяют по всей галактике', t1: 'Связь для', t2: 'самых смелых команд', aria: 'Партнёры' },
+			tech: {
+				label: '[04] Технологии', t1: 'Как движется', t2: 'сигнал', hop: 'Узел',
+				text: 'От петабитного ядра до роутера в прихожей: пять переходов меньше чем за пять миллисекунд.',
+				steps: [
+					{ title: 'Квантовое ядро', text: 'В сердце сети — защищённые ядра обработки данных с петабитной коммутацией.', specs: [['Ёмкость', '400 Тбит/с'], ['Резерв', 'N+2']] },
+					{ title: 'ИИ-маршрутизация', text: 'Нейросеть предсказывает перегрузки и перенаправляет пакеты раньше, чем вы что-то заметите.', specs: [['Решений', '2 млн/с'], ['Перестройка', '< 1 мс']] },
+					{ title: 'Орбитальный ретранслятор', text: 'Флот низкоорбитальных ретрансляторов покрывает места, куда не дотянуть оптику.', specs: [['Высота', '550 км'], ['Флот', '4 200 узлов']] },
+					{ title: 'Оптическая магистраль', text: 'Чистое стекло от континента до порога. Ни метра меди на всём пути.', specs: [['Среда', '100% оптика'], ['Потери', '0,2 дБ/км']] },
+					{ title: 'Ваш дом', text: 'Mesh-сеть Wi-Fi 7 доносит все 10 Гбит/с до каждой комнаты.', specs: [['Стандарт', 'Wi-Fi 7'], ['Подключение', '48 ч']] }
+				]
+			},
+			orbit: {
+				aria: 'Покрытие и орбитальная сеть',
+				label: '[05] Покрытие', t1: 'С орбиты', t2: 'к вашему порогу',
+				text: 'Оптика на земле, ретрансляторы в небе. Единая бесшовная сеть, где бы вы ни были.',
+				countries: 'Стран', nodes: 'Ретрансляторов', altitude: 'Высота орбиты', uptime: 'Доступность сети',
+				relayLabel: '[06] Орбитальный флот', relayT1: 'Передача сигнала', relayT2: 'на орбитальной скорости',
+				relayText: 'Низкоорбитальные ретрансляторы передают ваш сигнал друг другу каждые 90 секунд. Бесшовно, незаметно, всегда на связи.',
+				velocity: 'Скорость', linkLatency: 'Задержка канала', throughput: 'Пропускная способность', status: 'Статус', online: 'В сети',
+				lock: 'RLY-07 // ЗАХВАТ', stable: 'Связь стабильна',
+				beyondLabel: '[07] Дальше', beyondT1: 'Следующая остановка:', beyondT2: 'везде',
+				checkLead: 'Проверьте, доходит ли сигнал до вашего адреса.', checkLabel: 'Адрес или индекс', checkPh: 'Адрес или индекс'
+			},
+			plans: {
+				label: '[08] Выберите тариф', title: 'Просто. Прозрачно. Мощно.',
+				popular: 'Популярный', mo: '/ мес', perMonth: 'в месяц', start: 'Подключить', startSr: 'тариф «{name}»',
+				noteAria: 'Во всех тарифах', notes: ['Без контрактов', 'Без скрытых платежей', 'Без ограничения скорости', 'Смена тарифа в любой момент'],
+				items: {
+					cosmic: { name: 'Космос', desc: 'Стриминг и сёрфинг на каждый день.', speed: 'До 250 Мбит/с', list: ['250 Мбит/с загрузка и отдача', 'Безлимитный трафик', 'Гарантия доступности 99,9%', 'Поддержка 24/7'] },
+					galactic: { name: 'Галактика', desc: 'Для геймеров, семей и умных домов.', speed: 'До 1 Гбит/с', list: ['1 Гбит/с загрузка и отдача', 'Безлимитный трафик', 'Сверхнизкая задержка', 'Приоритетная поддержка'] },
+					supernova: { name: 'Сверхновая', desc: 'Для тех, кому нужен максимум.', speed: 'До 10 Гбит/с', list: ['10 Гбит/с загрузка и отдача', 'Безлимитный трафик', 'Выделенный канал', 'Премиум-поддержка 24/7'] }
+				}
+			},
+			perks: {
+				title: 'Почему DOMAIN',
+				items: [
+					['Широкое покрытие', 'Расширяемся по всему миру каждый день.'],
+					['Умные технологии', 'Оптимизация сети на базе ИИ.'],
+					['Поддержка 24/7', 'Всегда рядом. Всегда на связи.'],
+					['Без контрактов', 'Свобода выбирать то, что подходит именно вам.']
+				]
+			},
+			cta: { label: '[09] Старт', t1: 'Готовы покинуть', t2: 'атмосферу?', text: 'Подключение за 48 часов. Без контрактов. Отключение в любой момент.', connect: 'Подключиться', talk: 'Связаться с нами' },
+			footer: {
+				note: 'Интернет из другого измерения. Для тех, кто не привык ждать.',
+				company: 'Компания', companyLinks: ['О нас', 'Карьера', 'Новости', 'Контакты'],
+				resources: 'Ресурсы', resourceLinks: ['Поддержка', 'Вопросы и ответы', 'Статус сети', 'Конфиденциальность'],
+				stay: 'Будьте на связи', stayText: 'Новости и специальные предложения.',
+				email: 'Эл. почта', emailPh: 'Ваш e-mail', subscribe: 'Подписаться', social: 'Соцсети',
+				rights: 'Все права защищены.', nominal: 'Сигнал в норме'
+			},
+			pre: { meta: 'Связь · v2.6' },
+			js: {
+				status: ['Устанавливаю связь', 'Синхронизирую ретрансляторы', 'Загружаю пустоту', 'Сигнал захвачен'],
+				log: ['запуск систем // ok', 'рукопожатие RLY-07 // 4,2 мс', 'синхронизация орбит // 4 200 узлов', 'калибровка горизонта событий', 'кадры в буфере', 'сигнал захвачен'],
+				buffer: 'Буфер',
+				scan: 'Скан', scanning: 'Ищу', triangulating: 'Триангуляция ретрансляторов',
+				checkOk: '✓ Сигнал найден · доступно до 10 Гбит/с', checkErr: 'Введите адрес или индекс.',
+				subErr: 'Введите корректный e-mail.', subOk: 'Спасибо! Вы подписаны.', subDone: 'Вы в списке рассылки',
+				menuOpen: 'Открыть меню', menuClose: 'Закрыть меню', partner: 'Партнёр',
+				kms: 'км/с', ms: 'мс', gbps: 'Гбит/с', dist: 'ДИСТ', km: 'КМ'
+			}
+		},
+
+		uk: {
+			meta: {
+				title: 'DOMAIN — оптичний та орбітальний інтернет до 10 Гбіт/с',
+				description: 'Оптоволокно та низькоорбітальні ретранслятори: інтернет до 10 Гбіт/с із затримкою менше 5 мс. Прості тарифи від $59,99 на місяць, без контрактів. Перевірте покриття за адресою.',
+				imageAlt: 'DOMAIN: інтернет з іншого виміру. Чорна діра зі сяйливим акреційним диском.',
+				slogan: 'Інтернет з іншого виміру',
+				service: 'Інтернет-провайдер'
+			},
+			skip: 'Перейти до вмісту',
+			lang: 'Мова',
+			logoHome: 'DOMAIN — на головну',
+			premium: 'Преміум-інтернет',
+			u: { gbps: 'Гбіт/с', mbps: 'Мбіт/с', ms: 'мс', km: 'км' },
+			nav: { aria: 'Основне меню', ariaMobile: 'Мобільне меню', home: 'Головна', technology: 'Технології', coverage: 'Покриття', plans: 'Тарифи', about: 'Про нас', account: 'Кабінет', menu: 'Меню', open: 'Відкрити меню' },
+			hero: {
+				h1: 'Інтернет з іншого виміру: оптичний та орбітальний інтернет до 10 Гбіт/с',
+				kicker: 'Швидше за швидкість. Ширше за межі.',
+				t1: 'Інтернет з', t2a: 'іншого', t2b: 'виміру',
+				hud: 'Мережа в цифрах', signal: 'Сигнал', uptime: 'Доступність', latency: 'Затримка',
+				text: 'DOMAIN — надшвидкий і надійний інтернет на мережевих технологіях нового покоління.',
+				plans: 'Переглянути тарифи', coverage: 'Перевірити покриття', hint: 'Гортайте вниз', cursor: 'Гортайте ↓'
+			},
+			net: {
+				label: '[01] Створено для майбутнього', t1: 'Мережа', t2: 'нового покоління',
+				text: 'Глобальна оптоволоконна магістраль і маршрутизація на ШІ: неперевершена швидкість і стабільність.',
+				m1: 'Швидкість до', m1t: 'Однаково швидке завантаження й віддача',
+				m2: 'Наднизька затримка', m2t: 'Ігри, стримінг і робота',
+				m3: 'Чиста оптика', m3t: 'Без міді. Без компромісів.',
+				m4: 'Захист від DDoS', m4t: 'Безпека корпоративного рівня'
+			},
+			man: {
+				aria: 'Наша обіцянка', label: '[02] Сигнал',
+				text: 'Ми не викривляємо простір. Ми згортаємо відстань між вами й усім, що ви любите.',
+				latency: 'Затримка', throughput: 'Швидкість', medium: 'Середовище', fiber: '100% оптика'
+			},
+			partners: { label: '[03] Нам довіряють по всій галактиці', t1: 'Зв’язок для', t2: 'найсміливіших команд', aria: 'Партнери' },
+			tech: {
+				label: '[04] Технології', t1: 'Як рухається', t2: 'сигнал', hop: 'Вузол',
+				text: 'Від петабітного ядра до роутера в передпокої: п’ять переходів менш ніж за п’ять мілісекунд.',
+				steps: [
+					{ title: 'Квантове ядро', text: 'У серці мережі — захищені ядра обробки даних із петабітною комутацією.', specs: [['Ємність', '400 Тбіт/с'], ['Резерв', 'N+2']] },
+					{ title: 'ШІ-маршрутизація', text: 'Нейромережа передбачає перевантаження й перенаправляє пакети раніше, ніж ви щось помітите.', specs: [['Рішень', '2 млн/с'], ['Перебудова', '< 1 мс']] },
+					{ title: 'Орбітальний ретранслятор', text: 'Флот низькоорбітальних ретрансляторів покриває місця, куди не дотягнути оптику.', specs: [['Висота', '550 км'], ['Флот', '4 200 вузлів']] },
+					{ title: 'Оптична магістраль', text: 'Чисте скло від континенту до порога. Жодного метра міді на всьому шляху.', specs: [['Середовище', '100% оптика'], ['Втрати', '0,2 дБ/км']] },
+					{ title: 'Ваш дім', text: 'Mesh-мережа Wi-Fi 7 доносить усі 10 Гбіт/с до кожної кімнати.', specs: [['Стандарт', 'Wi-Fi 7'], ['Підключення', '48 год']] }
+				]
+			},
+			orbit: {
+				aria: 'Покриття та орбітальна мережа',
+				label: '[05] Покриття', t1: 'З орбіти', t2: 'до вашого порогу',
+				text: 'Оптика на землі, ретранслятори в небі. Єдина безшовна мережа, де б ви не були.',
+				countries: 'Країн', nodes: 'Ретрансляторів', altitude: 'Висота орбіти', uptime: 'Доступність мережі',
+				relayLabel: '[06] Орбітальний флот', relayT1: 'Передача сигналу', relayT2: 'на орбітальній швидкості',
+				relayText: 'Низькоорбітальні ретранслятори передають ваш сигнал одне одному кожні 90 секунд. Безшовно, непомітно, завжди на зв’язку.',
+				velocity: 'Швидкість', linkLatency: 'Затримка каналу', throughput: 'Пропускна здатність', status: 'Статус', online: 'У мережі',
+				lock: 'RLY-07 // ЗАХОПЛЕННЯ', stable: 'Зв’язок стабільний',
+				beyondLabel: '[07] Далі', beyondT1: 'Наступна зупинка:', beyondT2: 'усюди',
+				checkLead: 'Перевірте, чи доходить сигнал до вашої адреси.', checkLabel: 'Адреса або індекс', checkPh: 'Адреса або індекс'
+			},
+			plans: {
+				label: '[08] Оберіть тариф', title: 'Просто. Прозоро. Потужно.',
+				popular: 'Популярний', mo: '/ міс', perMonth: 'на місяць', start: 'Підключити', startSr: 'тариф «{name}»',
+				noteAria: 'У всіх тарифах', notes: ['Без контрактів', 'Без прихованих платежів', 'Без обмеження швидкості', 'Зміна тарифу будь-коли'],
+				items: {
+					cosmic: { name: 'Космос', desc: 'Стримінг і серфінг на кожен день.', speed: 'До 250 Мбіт/с', list: ['250 Мбіт/с завантаження й віддача', 'Безлімітний трафік', 'Гарантія доступності 99,9%', 'Підтримка 24/7'] },
+					galactic: { name: 'Галактика', desc: 'Для геймерів, родин і розумних будинків.', speed: 'До 1 Гбіт/с', list: ['1 Гбіт/с завантаження й віддача', 'Безлімітний трафік', 'Наднизька затримка', 'Пріоритетна підтримка'] },
+					supernova: { name: 'Наднова', desc: 'Для тих, кому потрібен максимум.', speed: 'До 10 Гбіт/с', list: ['10 Гбіт/с завантаження й віддача', 'Безлімітний трафік', 'Виділений канал', 'Преміум-підтримка 24/7'] }
+				}
+			},
+			perks: {
+				title: 'Чому DOMAIN',
+				items: [
+					['Широке покриття', 'Розширюємося по всьому світу щодня.'],
+					['Розумні технології', 'Оптимізація мережі на базі ШІ.'],
+					['Підтримка 24/7', 'Завжди поруч. Завжди на зв’язку.'],
+					['Без контрактів', 'Свобода обирати те, що підходить саме вам.']
+				]
+			},
+			cta: { label: '[09] Старт', t1: 'Готові залишити', t2: 'атмосферу?', text: 'Підключення за 48 годин. Без контрактів. Відключення будь-коли.', connect: 'Підключитися', talk: 'Зв’язатися з нами' },
+			footer: {
+				note: 'Інтернет з іншого виміру. Для тих, хто не звик чекати.',
+				company: 'Компанія', companyLinks: ['Про нас', 'Кар’єра', 'Новини', 'Контакти'],
+				resources: 'Ресурси', resourceLinks: ['Підтримка', 'Питання й відповіді', 'Статус мережі', 'Конфіденційність'],
+				stay: 'Будьте на зв’язку', stayText: 'Новини та спеціальні пропозиції.',
+				email: 'Ел. пошта', emailPh: 'Ваш e-mail', subscribe: 'Підписатися', social: 'Соцмережі',
+				rights: 'Усі права захищено.', nominal: 'Сигнал у нормі'
+			},
+			pre: { meta: 'Зв’язок · v2.6' },
+			js: {
+				status: ['Встановлюю зв’язок', 'Синхронізую ретранслятори', 'Завантажую порожнечу', 'Сигнал захоплено'],
+				log: ['запуск систем // ok', 'рукостискання RLY-07 // 4,2 мс', 'синхронізація орбіт // 4 200 вузлів', 'калібрування горизонту подій', 'кадри в буфері', 'сигнал захоплено'],
+				buffer: 'Буфер',
+				scan: 'Скан', scanning: 'Шукаю', triangulating: 'Тріангуляція ретрансляторів',
+				checkOk: '✓ Сигнал знайдено · доступно до 10 Гбіт/с', checkErr: 'Введіть адресу або індекс.',
+				subErr: 'Введіть коректний e-mail.', subOk: 'Дякуємо! Ви підписані.', subDone: 'Ви в списку розсилки',
+				menuOpen: 'Відкрити меню', menuClose: 'Закрити меню', partner: 'Партнер',
+				kms: 'км/с', ms: 'мс', gbps: 'Гбіт/с', dist: 'ДИСТ', km: 'КМ'
+			}
+		}
+	};
+
+	var T = DICT[LANG];
+	var PATH = LANGS[LANG].path;
+	// строки для JS (статусы прелоадера, сообщения форм, единицы)
+	T.js.lang = LANG;
+	T.js.intl = LANGS[LANG].intl;

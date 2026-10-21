@@ -1,0 +1,240 @@
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
+
+$mask-void: linear-gradient(180deg, #000 0%, #000 80%, transparent 100%);
+$mask-void-shade: linear-gradient(180deg, #000 0%, #000 71.4%, transparent 85.7%);
+$mask-orbit: linear-gradient(180deg, transparent 0%, #000 18%, #000 80%, transparent 100%);
+$mask-orbit-shade: linear-gradient(180deg, transparent 14.3%, #000 27.1%, #000 71.4%, transparent 85.7%);
+
+// «Глава»: высокая секция + липкая сцена с видео (canvas) и панелями поверх.
+// Длина скролла главы = её высота минус экран.
+.chapter {
+  position: relative;
+
+  &--void {
+    height: 700vh;
+
+    @include mq(mobile) {
+      height: 620vh;
+    }
+  }
+
+  &--orbit {
+    height: 600vh;
+
+    @include mq(mobile) {
+      height: 540vh;
+    }
+  }
+
+  &__stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100lvh;
+    overflow: hidden;
+  }
+
+  &__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  &__veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 120% 95% at 50% 50%, transparent 55%, rgba(5, 4, 11, .6) 100%);
+  }
+
+  // края сцены растворяются в звёздном небе соседних секций — без «шва».
+  // Подложки панелей выше/ниже сцены на 20%, поэтому их маска пересчитана в их координаты.
+  &__canvas,
+  &__veil {
+    -webkit-mask-image: $mask-void;
+    mask-image: $mask-void;
+  }
+
+  .panel__shade {
+    -webkit-mask-image: $mask-void-shade;
+    mask-image: $mask-void-shade;
+  }
+
+  &--orbit &__canvas,
+  &--orbit &__veil {
+    -webkit-mask-image: $mask-orbit;
+    mask-image: $mask-orbit;
+  }
+
+  &--orbit .panel__shade {
+    -webkit-mask-image: $mask-orbit-shade;
+    mask-image: $mask-orbit-shade;
+  }
+}
+
+// панель — «секция» внутри сцены; появляется/уходит по прогрессу скролла главы
+.panel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  will-change: transform, opacity;
+
+  > .container {
+    position: relative;
+    height: 100%;
+  }
+
+  &__shade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -20%;
+    bottom: -20%;
+    pointer-events: none;
+
+    &--hero {
+      background:
+        linear-gradient(180deg, rgba(5, 4, 11, .7) 0%, rgba(5, 4, 11, 0) 22%, rgba(5, 4, 11, 0) 58%, rgba(5, 4, 11, .82) 92%),
+        radial-gradient(ellipse 60% 55% at 50% 48%, transparent 40%, rgba(5, 4, 11, .25) 100%);
+
+      @include mq(mobile) {
+        background:
+          linear-gradient(180deg, rgba(5, 4, 11, .75) 0%, rgba(5, 4, 11, 0) 20%, rgba(5, 4, 11, 0) 42%, rgba(5, 4, 11, .82) 62%, rgba(5, 4, 11, .94) 100%);
+      }
+    }
+
+    &--left {
+      background: linear-gradient(90deg, rgba(5, 4, 11, .82) 0%, rgba(5, 4, 11, .55) 36%, rgba(5, 4, 11, 0) 62%);
+
+      @include mq(mobile) {
+        background: linear-gradient(0deg, rgba(5, 4, 11, .9) 0%, rgba(5, 4, 11, .55) 60%, rgba(5, 4, 11, .3) 100%);
+      }
+    }
+
+    &--center {
+      background: radial-gradient(ellipse 62% 58% at 50% 50%, rgba(5, 4, 11, .78) 0%, rgba(5, 4, 11, .45) 55%, rgba(5, 4, 11, .1) 85%);
+
+      @include mq(mobile) {
+        background: radial-gradient(ellipse 120% 50% at 50% 50%, rgba(5, 4, 11, .88) 0%, rgba(5, 4, 11, .6) 60%, rgba(5, 4, 11, .2) 100%);
+      }
+    }
+
+    &--bottom {
+      background: linear-gradient(0deg, rgba(5, 4, 11, .75) 0%, rgba(5, 4, 11, 0) 60%);
+    }
+
+    &--beyond {
+      background:
+        linear-gradient(90deg, rgba(5, 4, 11, .7) 0%, rgba(5, 4, 11, 0) 50%),
+        linear-gradient(0deg, rgba(5, 4, 11, .7) 0%, rgba(5, 4, 11, 0) 45%);
+    }
+  }
+}
+
+// контент слева, видео справа
+.split {
+  display: flex;
+  align-items: center;
+  padding-top: rem(70);
+
+  &__col {
+    width: 100%;
+    max-width: rem(580);
+  }
+
+  .label {
+    margin-bottom: rem(18);
+  }
+
+  .text {
+    margin-top: rem(18);
+    max-width: rem(470);
+  }
+
+  @include mq(tablet) {
+    padding-top: 64px;
+
+    .label { margin-bottom: 14px; }
+    .text { margin-top: 14px; }
+  }
+
+  @include mq(mobile) {
+    align-items: flex-end;
+    padding-bottom: 28px;
+  }
+}
+
+// ---------- без JavaScript (и для краулеров без рендера) ----------
+html:not(.js) {
+  .chapter {
+    height: auto;
+  }
+
+  .chapter__stage {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    background: $bg center / cover no-repeat fixed;
+  }
+
+  .chapter--void .chapter__stage {
+    background-image: url('../img/poster-void.webp');
+  }
+
+  .chapter--orbit .chapter__stage {
+    background-image: url('../img/step-fiber.webp');
+  }
+
+  .chapter__canvas,
+  .reticle,
+  .hero__hint {
+    display: none;
+  }
+
+  .panel__shade {
+    top: 0;
+    bottom: 0;
+  }
+
+  .header::before {
+    opacity: 1;
+  }
+
+  .panel {
+    position: relative;
+    min-height: 100vh;
+    height: auto;
+    padding: 40px 0;
+
+    > .container {
+      height: auto;
+      min-height: calc(100vh - 80px);
+    }
+  }
+
+  .marquee__track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+  }
+
+  .marquee__row[aria-hidden='true'] {
+    display: none;
+  }
+
+  .tech__inner {
+    height: auto;
+  }
+
+  .tech__track {
+    flex-wrap: wrap;
+    width: auto;
+  }
+}

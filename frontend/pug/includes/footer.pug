@@ -1,0 +1,46 @@
+footer.footer#about
+	.container
+		.footer__grid
+			.footer__brand(data-fade)
+				a.logo(href='#home' aria-label=T.logoHome)
+					span.logo__icon
+						+logo
+					span.logo__text
+						span.logo__name DOMAIN
+						span.logo__sub= T.premium
+				p.footer__note= T.footer.note
+			nav.footer__col(aria-labelledby='f-company' data-fade data-delay='.08')
+				h2.footer__title#f-company= T.footer.company
+				ul.footer__links
+					each l in T.footer.companyLinks
+						li: a(href='#')= l
+			nav.footer__col(aria-labelledby='f-resources' data-fade data-delay='.16')
+				h2.footer__title#f-resources= T.footer.resources
+				ul.footer__links
+					each l in T.footer.resourceLinks
+						li: a(href='#')= l
+			.footer__col.footer__subscribe(data-fade data-delay='.24')
+				h2.footer__title= T.footer.stay
+				p.footer__text#subscribe-hint= T.footer.stayText
+				form.subscribe(data-subscribe novalidate)
+					label.sr-only(for='subscribe-email')= T.footer.email
+					input#subscribe-email(type='email' name='email' placeholder=T.footer.emailPh autocomplete='email' required aria-describedby='subscribe-hint subscribe-status')
+					button(type='submit' aria-label=T.footer.subscribe)
+						+icon('send')
+						+icon('check')
+					p.sr-only#subscribe-status(role='status' aria-live='polite' data-subscribe-status)
+				nav.socials(aria-label=T.footer.social)
+					a(href='#' aria-label='X')
+						+social('x')
+					a(href='#' aria-label='Facebook')
+						+social('facebook')
+					a(href='#' aria-label='Instagram')
+						+social('instagram')
+					a(href='#' aria-label='YouTube')
+						+social('youtube')
+		.footer__bottom
+			p
+				| ©&nbsp;
+				span(data-year) 2026
+				= ' DOMAIN. ' + T.footer.rights
+			p.footer__coords= '51.4778° N · 0.0015° W · ' + T.footer.nominal

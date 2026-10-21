@@ -1,0 +1,233 @@
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
+
+// Пин + горизонтальная лента шагов
+.tech {
+  --edge: calc((100vw - min(100vw, #{rem(1320)})) / 2 + #{rem(20)});
+  position: relative;
+  z-index: 1;
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    height: 100svh;
+    padding: rem(96) 0 rem(36);
+    overflow: hidden;
+  }
+
+  &__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: rem(40);
+    margin-bottom: rem(40);
+
+    .label {
+      margin-bottom: rem(18);
+    }
+  }
+
+  &__meta {
+    max-width: rem(400);
+
+    .text {
+      font-size: rem(15.5);
+    }
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+    gap: rem(16);
+    margin-top: rem(22);
+  }
+
+  &__count {
+    font-family: $font-mono;
+    font-size: rem(12);
+    letter-spacing: .16em;
+    color: rgba(255, 255, 255, .62);
+    font-variant-numeric: tabular-nums;
+
+    span {
+      color: #fff;
+    }
+  }
+
+  &__bar {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, .14);
+
+    span {
+      position: absolute;
+      inset: 0;
+      background: $grad;
+      box-shadow: 0 0 8px rgba(139, 92, 246, .8);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+    }
+  }
+
+  &__track {
+    display: flex;
+    gap: rem(22);
+    width: max-content;
+    padding: 0 var(--edge);
+    will-change: transform;
+  }
+
+  @include mq(tablet) {
+    --edge: 24px;
+
+    &__inner { padding: 84px 0 28px; }
+
+    &__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    &__meta .text { font-size: 14.5px; }
+    &__progress { margin-top: 14px; }
+    &__track { gap: 14px; }
+  }
+
+  @include mq(mobile) {
+    --edge: 18px;
+
+    &__meta .text { display: none; }
+  }
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: rem(430);
+  border-radius: rem(14);
+  overflow: hidden;
+  @include glass(.6);
+  @include spotlight;
+
+  &__media {
+    position: relative;
+    height: min(#{rem(230)}, 26vh);
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: -12%;
+      width: 124%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      will-change: transform;
+    }
+
+    // кадр «растворяется» в стекле карточки
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 4, 11, 0) 35%, rgba(13, 11, 30, .96) 100%),
+        linear-gradient(90deg, rgba(90, 60, 200, .2), rgba(90, 60, 200, 0) 60%);
+    }
+  }
+
+  &__tag {
+    position: absolute;
+    left: rem(16);
+    top: rem(16);
+    z-index: 1;
+    padding: rem(6) rem(10);
+    border: 1px solid rgba(255, 255, 255, .16);
+    background: rgba(5, 4, 11, .55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font-family: $font-mono;
+    font-size: rem(10.5);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  &__body {
+    padding: rem(2) rem(26) rem(26);
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__num {
+    font-family: $font-display;
+    font-size: rem(30);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(214, 200, 255, .6);
+  }
+
+  &__title {
+    margin-top: rem(16);
+    font-family: $font-display;
+    font-size: rem(19);
+    font-weight: 400;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+
+  &__text {
+    margin-top: rem(10);
+    font-size: rem(14.5);
+    line-height: 1.55;
+    color: $muted;
+  }
+
+  &__specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: rem(14);
+    margin: rem(20) 0 0;
+    padding-top: rem(16);
+    border-top: 1px dashed rgba(255, 255, 255, .14);
+
+    dt {
+      font-family: $font-mono;
+      font-size: rem(10.5);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: $muted;
+    }
+
+    dd {
+      margin: rem(5) 0 0;
+      font-family: $font-mono;
+      font-size: rem(14);
+      color: #fff;
+    }
+  }
+
+  @include mq(tablet) {
+    width: min(420px, 78vw);
+
+    &__media { height: 22vh; }
+    &__body { padding: 0 20px 20px; }
+    &__num { font-size: 24px; }
+    &__title { font-size: 16px; margin-top: 12px; }
+    &__text { font-size: 14px; }
+    &__specs { margin-top: 14px; padding-top: 12px; }
+    &__specs dt { font-size: 10px; }
+    &__specs dd { font-size: 13px; }
+  }
+}

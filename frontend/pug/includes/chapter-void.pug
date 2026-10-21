@@ -1,0 +1,150 @@
+-
+	var BRANDS = [
+		{ name: 'ORBITA', font: 'orbitron', mark: 'ring' },
+		{ name: 'NEBULON', font: 'audiowide', mark: 'arcs' },
+		{ name: 'QUASAR', font: 'syncopate', mark: 'burst' },
+		{ name: 'HELIX/9', font: 'oxanium', mark: 'slash' },
+		{ name: 'VANTA', font: 'tektur', mark: 'chevron' },
+		{ name: 'AXIOM', font: 'chakra', mark: 'tri' },
+		{ name: 'KRONOS', font: 'unica', mark: 'hex' },
+		{ name: 'ZENITH', font: 'bruno', mark: 'horizon' }
+	];
+
+mixin brand(b)
+	li.brand(class='brand--' + b.font data-brand)
+		span.brand__plate
+			+mark(b.mark)
+			span.sr-only= b.name
+			span.brand__name(aria-hidden='true')
+				each ch, i in b.name.split('')
+					span.brand__ch(style='--i:' + i)= ch
+
+//- Глава 1: видео «полёт к чёрной дыре» прокручивается скроллом, секции появляются поверх него
+section.chapter.chapter--void#home(aria-labelledby='hero-title' data-chapter='void' data-seq=ROOT + 'public/seq/void-sd/' data-seq-hd=ROOT + 'public/seq/void-hd/' data-seq-v=SEQ_V data-count='477' data-map='0:0,.13:.12,.17:.34,.42:.52,.47:.58,.72:.84,.77:.88,1:1' data-focus='.5')
+	.chapter__stage
+		canvas.chapter__canvas(data-canvas)
+		.chapter__veil
+
+		//- 1 — hero
+		.panel.panel--hero(data-panel data-in='0' data-out='.13' data-cursor=T.hero.cursor)
+			.panel__shade.panel__shade--hero
+			.container.hero
+				h1.sr-only#hero-title= T.hero.h1
+				.hero__top
+					p.label
+						span.label__dot
+						span(data-hero-kicker)= T.hero.kicker
+					p.hero__t1(aria-hidden='true' data-hero-t1)= T.hero.t1
+				ul.hero__hud(data-hero-hud aria-label=T.hero.hud)
+					li.hud-row
+						+icon('bolt')
+						span.hud-row__k= T.hero.signal
+						span.hud-row__v= '10 ' + T.u.gbps
+					li.hud-row
+						+icon('uptime')
+						span.hud-row__k= T.hero.uptime
+						span.hud-row__v= num('99.99', 2) + '%'
+					li.hud-row
+						+icon('orbit')
+						span.hud-row__k= T.hero.latency
+						span.hud-row__v= '< 5 ' + T.u.ms
+				.hero__bottom
+					.hero__lead(data-hero-lead)
+						p.hero__text= T.hero.text
+						.hero__actions
+							a.btn.btn--primary(href='#plans' data-magnetic)
+								span= T.hero.plans
+								+icon('arrow')
+							a.btn.btn--ghost(href='#coverage' data-magnetic)
+								span= T.hero.coverage
+								+icon('pin')
+					p.hero__t2(aria-hidden='true' data-hero-t2)
+						span.hero__line= T.hero.t2a
+						span.hero__line
+							span.grad= T.hero.t2b
+			.hero__hint(data-hero-hint aria-hidden='true')
+				span.hero__hint-line
+				span.hero__hint-text= T.hero.hint
+
+		//- 2 — сеть: контент на тёмной тени горизонта событий
+		section.panel.panel--network(aria-labelledby='network-title' data-panel data-in='.17' data-out='.42')
+			.panel__shade.panel__shade--left
+			.container.split
+				.split__col
+					p.label(data-scramble)= T.net.label
+					h2.title#network-title(data-type)
+						= T.net.t1
+						br
+						span.grad= T.net.t2
+					p.text(data-fade)= T.net.text
+					.metrics(role='list')
+						div.metric(role='listitem' data-card data-tilt)
+							.metric__top
+								+ico('gauge')
+								span.metric__label= T.net.m1
+							p.metric__value
+								span(data-count='10') 10
+								span.metric__unit= T.u.gbps
+							p.metric__text= T.net.m1t
+						div.metric(role='listitem' data-card data-tilt)
+							.metric__top
+								+ico('pulse')
+								span.metric__label= T.net.m2
+							p.metric__value
+								span.metric__unit.metric__unit--pre &lt;
+								span(data-count='5' data-from='99') 5
+								span.metric__unit= T.u.ms
+							p.metric__text= T.net.m2t
+						div.metric(role='listitem' data-card data-tilt)
+							.metric__top
+								+ico('fiber')
+								span.metric__label= T.net.m3
+							p.metric__value
+								span(data-count='100') 100
+								span.metric__unit %
+							p.metric__text= T.net.m3t
+						div.metric(role='listitem' data-card data-tilt)
+							.metric__top
+								+ico('shield')
+								span.metric__label= T.net.m4
+							p.metric__value
+								span(data-scramble-value) TIER IV
+							p.metric__text= T.net.m4t
+
+		//- 3 — манифест: пролёт сквозь диск, слова подсвечиваются скроллом
+		section.panel.panel--manifesto(aria-label=T.man.aria data-panel data-in='.47' data-out='.72' data-rest-at='.9')
+			.panel__shade.panel__shade--center
+			.container.manifesto
+				p.label= T.man.label
+				p.manifesto__text(data-words)= T.man.text
+				ul.manifesto__meta
+					li
+						span= T.man.latency
+						strong= '< 5 ' + T.u.ms
+					li
+						span= T.man.throughput
+						strong= '10 ' + T.u.gbps
+					li
+						span= T.man.medium
+						strong= T.man.fiber
+
+		//- 4 — партнёры: спокойная галактика, 3D-логотипы
+		section.panel.panel--partners(aria-labelledby='partners-title' data-panel data-in='.77' data-out='1')
+			.panel__shade.panel__shade--bottom
+			.partners
+				.container.partners__head
+					p.label(data-scramble)= T.partners.label
+					h2.title#partners-title(data-type)
+						= T.partners.t1
+						br
+						span.grad= T.partners.t2
+				.marquee(data-marquee)
+					.marquee__row(data-dir='-1')
+						ul.marquee__track(aria-label=T.partners.aria)
+							each b in BRANDS
+								+brand(b)
+					//- второй ряд — визуальный дубль, скринридерам не нужен
+					.marquee__row(data-dir='1' aria-hidden='true')
+						ul.marquee__track
+							each b in BRANDS.slice().reverse()
+								+brand(b)

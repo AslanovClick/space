@@ -1,0 +1,31 @@
+//- Прелоадер: WebGL-планета + орбиты/спутники на canvas + HUD
+.preloader(data-preloader aria-hidden='true')
+	canvas.preloader__gl(data-pre-gl aria-hidden='true')
+	canvas.preloader__hud(data-pre-hud aria-hidden='true')
+	.preloader__ui(data-pre-ui)
+		span.preloader__corner.preloader__corner--tl
+		span.preloader__corner.preloader__corner--tr
+		span.preloader__corner.preloader__corner--bl
+		span.preloader__corner.preloader__corner--br
+		.preloader__top
+			span.preloader__brand
+				+logo
+				| DOMAIN
+			span.preloader__meta= T.pre.meta
+		p.preloader__coords
+			| RA 17h 45m 40s
+			br
+			| DEC −29° 00′ 28″
+		.preloader__log(data-pre-log aria-hidden='true')
+		.preloader__center
+			p.preloader__count
+				span(data-preloader-count) 000
+				small %
+			p.preloader__status(data-pre-status)= T.js.status[0]
+		p.preloader__buf(data-pre-buf)= T.js.buffer + ' 000 / 000'
+		.preloader__bar
+			span(data-preloader-bar)
+
+canvas.stars(data-stars aria-hidden='true')
+
+.noise(aria-hidden='true')

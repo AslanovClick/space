@@ -1,0 +1,211 @@
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  overflow: hidden;
+  background: #030209;
+
+  .js & {
+    display: block;
+  }
+
+  .is-loaded & {
+    display: none;
+  }
+
+  &__gl,
+  &__hud {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  &.is-fallback &__gl {
+    display: none;
+  }
+
+  &__ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    font-family: $font-mono;
+    font-size: rem(10.5);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: rgba(225, 218, 255, .7);
+  }
+
+  // HUD-уголки по краям экрана
+  &__corner {
+    position: absolute;
+    width: rem(22);
+    height: rem(22);
+    border: 0 solid rgba(206, 188, 255, .5);
+
+    &--tl { left: rem(28); top: rem(28); border-left-width: 1px; border-top-width: 1px; }
+    &--tr { right: rem(28); top: rem(28); border-right-width: 1px; border-top-width: 1px; }
+    &--bl { left: rem(28); bottom: rem(28); border-left-width: 1px; border-bottom-width: 1px; }
+    &--br { right: rem(28); bottom: rem(28); border-right-width: 1px; border-bottom-width: 1px; }
+  }
+
+  &__top {
+    position: absolute;
+    left: rem(64);
+    top: rem(52);
+    display: flex;
+    align-items: center;
+    gap: rem(18);
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+    font-family: $font-logo;
+    font-size: rem(13);
+    letter-spacing: .32em;
+    color: #fff;
+
+    svg {
+      width: rem(28);
+      height: rem(28);
+      filter: drop-shadow(0 0 rem(10) rgba(139, 92, 246, .6));
+    }
+  }
+
+  &__meta {
+    padding-left: rem(18);
+    border-left: 1px solid rgba(255, 255, 255, .16);
+    color: rgba(255, 255, 255, .45);
+  }
+
+  &__coords {
+    position: absolute;
+    right: rem(64);
+    top: rem(52);
+    line-height: 1.9;
+    text-align: right;
+    color: rgba(255, 255, 255, .45);
+  }
+
+  &__log {
+    position: absolute;
+    left: rem(64);
+    bottom: rem(60);
+    display: grid;
+    gap: rem(7);
+    color: rgba(220, 210, 255, .5);
+    text-transform: none;
+    letter-spacing: .06em;
+
+    div:last-child {
+      color: #fff;
+    }
+  }
+
+  &__center {
+    position: absolute;
+    left: 50%;
+    top: 77%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  &__count {
+    font-family: $font-display;
+    font-size: rem(52);
+    line-height: 1;
+    letter-spacing: .04em;
+    color: #fff;
+    text-shadow: 0 0 rem(30) rgba(150, 110, 255, .6);
+    font-variant-numeric: tabular-nums;
+
+    small {
+      margin-left: rem(6);
+      font-family: $font-mono;
+      font-size: rem(14);
+      vertical-align: top;
+      color: $violet-light;
+    }
+  }
+
+  &__status {
+    margin-top: rem(16);
+    color: rgba(230, 222, 255, .82);
+    transition: color .4s;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: .6em;
+      height: 1.1em;
+      margin-left: .4em;
+      vertical-align: -.2em;
+      background: currentColor;
+      animation: caret-blink 1s steps(1) infinite;
+    }
+
+    &.is-locked {
+      color: #93f3cf;
+    }
+  }
+
+  &__buf {
+    position: absolute;
+    right: rem(64);
+    bottom: rem(60);
+    color: rgba(255, 255, 255, .45);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, .06);
+
+    span {
+      position: absolute;
+      inset: 0;
+      background: $grad;
+      box-shadow: 0 0 12px rgba(139, 92, 246, .9);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+    }
+  }
+
+  @include mq(tablet) {
+    &__ui { font-size: 10px; }
+    &__top { left: 40px; top: 40px; }
+    &__brand { font-size: 12px; }
+    &__brand svg { width: 24px; height: 24px; }
+    &__coords { right: 40px; top: 40px; }
+    &__log { left: 40px; bottom: 44px; }
+    &__buf { right: 40px; bottom: 44px; }
+    &__count { font-size: 44px; }
+    &__count small { font-size: 13px; }
+    &__corner--tl, &__corner--tr { top: 20px; }
+    &__corner--bl, &__corner--br { bottom: 20px; }
+    &__corner--tl, &__corner--bl { left: 20px; }
+    &__corner--tr, &__corner--br { right: 20px; }
+  }
+
+  @include mq(mobile) {
+    &__top { left: 28px; top: 32px; }
+    &__meta, &__coords { display: none; }
+    &__log { left: 28px; right: 28px; bottom: 64px; }
+    &__buf { right: auto; left: 28px; bottom: 36px; }
+    &__center { top: 66%; }
+    &__count { font-size: 38px; }
+  }
+}

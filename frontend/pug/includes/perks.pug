@@ -1,0 +1,12 @@
+- var PERK_ICONS = ['globe', 'chip', 'comms', 'unlock'];
+
+section.perks(aria-labelledby='perks-title' data-perks data-rest)
+	.container
+		h2.sr-only#perks-title= T.perks.title
+		.perks__grid(role='list')
+			each p, i in T.perks.items
+				.perk(role='listitem' data-perk)
+					+ico(PERK_ICONS[i])
+					div
+						h3.perk__title= p[0]
+						p.perk__text= p[1]

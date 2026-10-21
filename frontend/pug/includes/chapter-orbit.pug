@@ -1,0 +1,94 @@
+//- Глава 2: орбита — Земля, корабль-ретранслятор (его ведёт HUD-прицел), Луна
+section.chapter.chapter--orbit#coverage(aria-label=T.orbit.aria data-chapter='orbit' data-seq=ROOT + 'public/seq/orbit-sd/' data-seq-hd=ROOT + 'public/seq/orbit-hd/' data-seq-v=SEQ_V data-count='417' data-duration='16.68' data-map='0:0,.28:.2,.34:.24,.62:.58,.68:.66,1:1' data-focus='.5' data-focus-m='.62')
+	.chapter__stage
+		canvas.chapter__canvas(data-canvas)
+		.chapter__veil
+
+		.reticle(data-reticle aria-hidden='true')
+			span.reticle__c.reticle__c--tl
+			span.reticle__c.reticle__c--tr
+			span.reticle__c.reticle__c--bl
+			span.reticle__c.reticle__c--br
+			span.reticle__cross
+			.reticle__label
+				span.reticle__id= T.orbit.lock
+				span(data-reticle-dist)= T.js.dist + ' ' + num('1240', 0, true) + ' ' + T.js.km
+				span.reticle__ok= T.orbit.stable
+
+		//- 1 — покрытие
+		section.panel.panel--coverage(aria-labelledby='coverage-title' data-panel data-in='0' data-out='.28')
+			.panel__shade.panel__shade--left
+			.container.split
+				.split__col
+					p.label(data-scramble)= T.orbit.label
+					h2.title#coverage-title(data-type)
+						= T.orbit.t1
+						br
+						span.grad= T.orbit.t2
+					p.text(data-fade)= T.orbit.text
+					.stats(role='list')
+						.stat-box(role='listitem' data-card)
+							p.stat-box__v
+								span(data-count='190') 190
+								| +
+							p.stat-box__k= T.orbit.countries
+						.stat-box(role='listitem' data-card)
+							p.stat-box__v
+								span(data-count='4200' data-format='comma')= num('4200', 0, true)
+							p.stat-box__k= T.orbit.nodes
+						.stat-box(role='listitem' data-card)
+							p.stat-box__v
+								span(data-count='550') 550
+								small= T.u.km
+							p.stat-box__k= T.orbit.altitude
+						.stat-box(role='listitem' data-card)
+							p.stat-box__v
+								span(data-count='99.99' data-decimals='2')= num('99.99', 2)
+								small %
+							p.stat-box__k= T.orbit.uptime
+
+		//- 2 — ретранслятор: телеметрия «живая»
+		section.panel.panel--relay(aria-labelledby='relay-title' data-panel data-in='.34' data-out='.62')
+			.panel__shade.panel__shade--left
+			.container.relay
+				.relay__card(data-card)
+					p.label= T.orbit.relayLabel
+					h2.title.title--sm#relay-title(data-type)
+						= T.orbit.relayT1
+						br
+						span.grad= T.orbit.relayT2
+					p.text= T.orbit.relayText
+					dl.telemetry
+						div
+							dt= T.orbit.velocity
+							dd(data-tele='vel')= num('7.6', 2) + ' ' + T.js.kms
+						div
+							dt= T.orbit.linkLatency
+							dd(data-tele='lat')= num('4.2', 1) + ' ' + T.js.ms
+						div
+							dt= T.orbit.throughput
+							dd(data-tele='thr')= num('9.8', 2) + ' ' + T.js.gbps
+						div
+							dt= T.orbit.status
+							dd.telemetry__ok= T.orbit.online
+
+		//- 3 — луна: проверка адреса
+		section.panel.panel--beyond(aria-labelledby='beyond-title' data-panel data-in='.68' data-out='1')
+			.panel__shade.panel__shade--beyond
+			.container.beyond
+				.beyond__head
+					p.label(data-scramble)= T.orbit.beyondLabel
+					h2.title#beyond-title(data-type)
+						= T.orbit.beyondT1
+						br
+						span.grad= T.orbit.beyondT2
+				.beyond__check(data-card)
+					p.beyond__lead#check-lead= T.orbit.checkLead
+					form.check(data-check novalidate aria-labelledby='check-lead')
+						label.sr-only(for='check-address')= T.orbit.checkLabel
+						+icon('pin')
+						input#check-address(type='text' name='address' placeholder=T.orbit.checkPh autocomplete='street-address' required aria-describedby='check-result')
+						button.btn.btn--primary(type='submit')
+							span= T.js.scan
+							+icon('scan')
+					p.check__result#check-result(data-check-result role='status' aria-live='polite')

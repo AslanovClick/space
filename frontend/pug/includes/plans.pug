@@ -1,0 +1,45 @@
+mixin plan(o)
+	article.plan(class=o.featured ? 'plan--featured' : '' aria-labelledby='plan-' + o.id data-plan data-tilt)
+		if o.featured
+			span.plan__ring(aria-hidden='true')
+			p.plan__badge(data-plan-badge)
+				+icon('spark')
+				= T.plans.popular
+		.plan__head
+			span.plan__code(aria-hidden='true')= o.code
+			+planIcon(o.type)
+		h3.plan__name(id='plan-' + o.id)= o.name
+		p.plan__desc= o.desc
+		p.plan__price
+			span.plan__currency $
+			span.plan__amount(data-count=o.price data-decimals='2')= num(o.price, 2)
+			span.plan__period
+				span(aria-hidden='true')= T.plans.mo
+				span.sr-only= ' ' + T.plans.perMonth
+		p.plan__speed
+			+icon('bolt')
+			span= o.speed
+		ul.plan__list
+			each item in o.list
+				li
+					+icon('check')
+					span= item
+		a.btn.btn--block(class=o.featured ? 'btn--primary' : 'btn--ghost' href='#' data-magnetic)
+			span
+				= T.plans.start
+				span.sr-only= ' ' + T.plans.startSr.replace('{name}', o.name)
+			+icon('arrow')
+
+//- Пин: тарифы собираются по скроллу
+section.plans#plans(aria-labelledby='plans-title' data-plans)
+	.container
+		.section-head
+			p.label(data-scramble)= T.plans.label
+			h2.title#plans-title(data-type)
+				span.grad= T.plans.title
+		.plans__grid(data-plans-grid)
+			each pl in PLANS
+				+plan(pl)
+		ul.plans__note(aria-label=T.plans.noteAria)
+			each n in T.plans.notes
+				li= n

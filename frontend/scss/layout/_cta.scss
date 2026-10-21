@@ -1,0 +1,81 @@
+@use 'abstracts/functions' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
+
+.cta {
+  position: relative;
+  z-index: 1;
+  padding: rem(10) 0 rem(110);
+
+  &__box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: rem(470);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: rem(18);
+    background: #07060f;
+  }
+
+  // кадр из видео с Луной, растворённый в фоне
+  &__media {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 28%;
+    right: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 40%;
+    transform: scale(1.15);
+    will-change: transform;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: rem(780);
+    padding: rem(64);
+
+    .label {
+      margin-bottom: rem(18);
+    }
+
+    .text {
+      margin-top: rem(16);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(14);
+    margin-top: rem(32);
+  }
+
+  @include mq(tablet) {
+    padding-bottom: 70px;
+
+    &__box {
+      align-items: flex-end;
+      min-height: 560px;
+    }
+
+    &__media {
+      left: 0;
+      -webkit-mask-image: linear-gradient(0deg, transparent 20%, #000 70%);
+      mask-image: linear-gradient(0deg, transparent 20%, #000 70%);
+    }
+
+    &__content { padding: 28px; }
+    &__actions { margin-top: 24px; }
+  }
+}
